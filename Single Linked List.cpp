@@ -13,7 +13,6 @@ class Node{
       this->next = NULL;
     }    
 };
-
 void print(Node* &head){
   Node *temp = head;
   if(temp == NULL){
