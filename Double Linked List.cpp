@@ -119,6 +119,26 @@ void deleteFromPosition(Node* &head,Node* &tail, int position){
     delete current;
   }
 }
+
+Node* reverseDLL(Node* head)
+{   
+     if(head->next == NULL){
+         head->next = head->prev;
+         head->prev = NULL;
+         return head;
+     }
+
+     Node *newHead = reverseDLL(head->next);
+    
+     head->next->next = head;
+     head->prev = head->next;
+     head->next = NULL;
+    //  cout<<"prev- "<<head->prev<<" next-"<<head->next<<endl;
+
+     return newHead;
+
+}
+
  
 int main(){
   Node *node1 = new Node(5);
