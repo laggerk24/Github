@@ -129,3 +129,32 @@ int main(){
   cout<<"Head-"<<head->data<<" Tail-"<<tail->data<<endl;
 
 }
+
+Node* reverseWithK(Node* head,int pairs, int k){
+    if(pairs == 0)
+        return head;
+    int count = 1;
+    Node *prev = NULL;
+    Node *curr = head;
+    while(count <= k){
+        Node *forward = curr->next;
+        curr->next = prev;
+        prev = curr;
+        curr = forward;
+        count++;
+    }
+    head->next = reverseWithK(curr, pairs-1, k);
+    return prev;
+}
+
+Node* kReverse(Node* head, int k) {
+    
+    int count = 1;
+    Node* temp = head;
+    while(temp->next != NULL){
+        temp = temp->next;
+        count++;
+    }
+    int pairs = count/k;
+    return reverseWithK(head, pairs, k);
+}
