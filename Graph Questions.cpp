@@ -5,7 +5,7 @@
 #include <bits/stdc++.h>
 #include <vector>
 
-
+using namespace std;
 class Node {
 public:
     int val;
@@ -30,7 +30,7 @@ Node* cloneGraphUtil(Node* node, map<Node*,Node*> &mpp){
     Node* newNode = new Node(node->val);
     mpp[node] = newNode;
     for(auto neighbor:node->neighbors){
-        if(mpp.find(neighbor) != mpp.end()){
+        if(mpp.find(neighbor) != mpp.end())
             newNode->neighbors.push_back(mpp[neighbor]);
         else
             newNode->neighbors.push_back(cloneGraphUtil(neighbor,mpp));
@@ -45,3 +45,7 @@ public:
         return cloneGraphUtil(node,mpp);
     }
 };
+int main(){
+  cout<<"hello world";
+}
+ 
