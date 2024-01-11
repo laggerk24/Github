@@ -1,0 +1,32 @@
+//https://www.codingninjas.com/studio/problems/frog-jump_3621012
+
+#include <bits/stdc++.h> 
+int frogJumpUtil(int index, vector<int> &heights, int n, vector<int> &dp){
+    if(index == n-1){
+        return 0;
+    }
+    if(dp[index] != -1) return dp[index];
+    int firstJump = frogJumpUtil(index+1,heights,n,dp) + abs(heights[index] - heights[index+1]);
+    int secondJump = INT_MAX;
+    if(index < n-2)
+        secondJump = frogJumpUtil(index+2,heights,n,dp) + abs(heights[index] - heights[index+2]);
+    return dp[index] = min(firstJump,secondJump);
+}
+
+int frogJumpUtil2(int index, vector<int> &heights, vector<int> &dp){
+    if(index==0) return 0;
+    if(dp[index] != -1) return dp[index];
+
+    int firstJump = frogJumpUtil2(index-1,heights,dp) + abs(heights[index] - heights[index-1]);
+    int secondJump = INT_MAX;
+    if(index>1)
+        secondJump = frogJumpUtil2(index-2,heights,dp) + abs(heights[index] - heights[index-2]);
+    return dp[index] = min(firstJump,secondJump);
+}
+
+int frogJump(int n, vector<int> &heights)
+{
+    vector<int> dp(n,-1);
+    return frogJumpUtil2(n-1, heights,dp);
+    // return frogJumpUtil(0,heights,n,dp);
+}
