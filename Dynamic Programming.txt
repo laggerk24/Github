@@ -1,0 +1,20 @@
+Subsequences
+
+https://www.codingninjas.com/studio/problems/subset-sum-equal-to-k_1550954
+bool subsetSumToKUtil(int index,int target, vector<int> &arr,vector<vector<int>> &dp){
+    if(target == 0)
+        return true;
+    if(index<0)
+        return false;
+    if(dp[index][target] != -1) return dp[index][target];
+    if(target>=arr[index] && subsetSumToKUtil(index-1,target-arr[index], arr,dp))
+        return dp[index][target] = true;
+    if(subsetSumToKUtil(index-1,target,arr,dp))
+        return dp[index][target] = true;
+    return dp[index][target] = false;
+}
+
+bool subsetSumToK(int n, int k, vector<int> &arr) {
+    vector<vector<int>> dp(n,vector<int>(k+1,-1));
+    return subsetSumToKUtil(n-1, k, arr,dp);
+}
