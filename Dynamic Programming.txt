@@ -18,3 +18,26 @@ bool subsetSumToK(int n, int k, vector<int> &arr) {
     vector<vector<int>> dp(n,vector<int>(k+1,-1));
     return subsetSumToKUtil(n-1, k, arr,dp);
 }
+
+#include <bits/stdc++.h>
+int countSubsets(int index, int target, vector<int> &arr, vector<vector<int>> &dp){
+    if(index == 0){
+        if(target==0 && arr[0]==0) return 2;
+        if(target == arr[0]) return 1;
+        return 0;
+    }
+    if(dp[index][target] != -1) return dp[index][target];
+    int exclude = countSubsets(index-1,target, arr, dp);
+    int include = countSubsets(index-1,target-arr[index], arr, dp);
+    return dp[index][target] = include+exclude;
+}
+
+int targetSum(int n, int target, vector<int>& arr) {
+    target = abs(target);
+    int sum = 0;
+    for(int i=0;i<n;i++)
+        sum += arr[i];
+    int S1 = (sum-target)/2;
+    vector<vector<int>> dp(n,vector<int>(S1+1,-1));
+    return countSubsets(n-1, S1, arr, dp);
+}
