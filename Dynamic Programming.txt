@@ -41,3 +41,22 @@ int targetSum(int n, int target, vector<int>& arr) {
     vector<vector<int>> dp(n,vector<int>(S1+1,-1));
     return countSubsets(n-1, S1, arr, dp);
 }
+
+int solve(int index1, int index2, string s1, string s2,vector<vector<int>> &dp){
+        if(index2 == s2.length() && index1 == s1.length())
+            return 0;
+        if(index2 == s2.length() && index1 < s1.length())
+            return s1.length()-index1;
+        if(index1 == s1.length() && index2 < s2.length())
+            return s2.length()-index2;
+        if(dp[index1][index2] != -1) return dp[index1][index2];
+        if(s1[index1] == s2[index2])
+            return dp[index1][index2] = solve(index1+1, index2+1, s1, s2,dp);
+        
+        return dp[index1][index2] = 1+min({solve(index1+1,index2+1, s1, s2,dp), solve(index1+1, index2, s1, s2,dp), solve(index1, index2+1, s1, s2,dp)});
+    }
+    int minDistance(string word1, string word2) {
+        int n1 = word1.size(), n2 = word2.size();
+        vector<vector<int>> dp(n1,vector<int>(n2,-1));
+        return solve(0,0,word1,word2,dp);
+    }
