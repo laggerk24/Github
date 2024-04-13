@@ -1,0 +1,42 @@
+https://leetcode.com/problems/find-the-prefix-common-array-of-two-arrays/
+
+//Using HashMap
+	public int[] findThePrefixCommonArray(int[] A, int[] B) {
+        HashMap<Integer,Integer> mpp = new HashMap<>();
+        int count = 0;
+        int n = A.length;
+        int[] array = new int[n];
+        for(int i=0;i<n;i++){
+            if(A[i]==B[i]) count++;
+            if(mpp.containsKey(A[i])){
+                count ++;
+            }
+            if(mpp.containsKey(B[i])){
+                count++;
+            }
+            array[i] = count;
+            mpp.put(A[i],1);
+            mpp.put(B[i],1);
+        }
+        return array;
+    }
+    //Using Set
+    public int[] findThePrefixCommonArray(int[] A, int[] B) {
+        HashSet<Integer> mpp = new HashSet<>();
+        int count = 0;
+        int n = A.length;
+        int[] array = new int[n];
+        for(int i=0;i<n;i++){
+            if(A[i]==B[i]) count++;
+            if(mpp.contains(A[i])){
+                count ++;
+            }
+            if(mpp.contains(B[i])){
+                count++;
+            }
+            array[i] = count;
+            mpp.add(A[i]);
+            mpp.add(B[i]);
+        }
+        return array;
+    }
