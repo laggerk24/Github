@@ -1,0 +1,68 @@
+import java.util.*;
+
+class Main {
+    static class Pair {
+        long first, second;
+        
+        public Pair(long first, long second) {
+            this.first = first;
+            this.second = second;
+        }
+    }
+    
+    static class MyComp implements Comparator<Pair> {
+        public int compare(Pair a, Pair b) {
+            if (a.first == b.first) {
+                return Long.compare(b.second, a.second);
+            } else {
+                return Long.compare(b.first, a.first);
+            }
+        }
+    }
+    
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        
+        int n = scanner.nextInt();
+        int m = scanner.nextInt();
+        List<Pair>[] G = new ArrayList[n + 1];
+        for (int i = 0; i <= n; i++) {
+            G[i] = new ArrayList<>();
+        }
+        
+        for (int i = 1; i <= m; i++) {
+            int x = scanner.nextInt();
+            int y = scanner.nextInt();
+            int z = scanner.nextInt();
+            G[x].add(new Pair(y, z));
+        }
+        
+        PriorityQueue<Pair> p1 = new PriorityQueue<>(new MyComp());
+        long[] d = new long[n + 1];
+        Arrays.fill(d, Long.MAX_VALUE);
+        
+        int source = scanner.nextInt();
+        p1.add(new Pair(0, source));
+        d[source] = 0;
+        
+        while (!p1.isEmpty()) {
+            long x1 = p1.peek().first;
+            long y1 = p1.peek().second;
+            p1.poll();
+            if (x1 == d[(int)y1]) {
+                for (Pair u : G[(int)y1]) {
+                    long v1 = u.first;
+                    long weight = u.second;
+                    if (d[(int)y1] + weight < d[(int)v1]) {
+                        d[(int)v1] = d[(int)y1] + weight;
+                        p1.add(new Pair(d[(int)v1], v1));
+                    }
+                }
+            }
+        }
+        
+        for (int i = 1; i <= n; i++) {
+            System.out.println(d[i]);
+        }
+    }
+}
